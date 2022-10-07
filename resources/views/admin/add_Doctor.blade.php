@@ -71,8 +71,7 @@
                 </div>
 
                 <div style='padding:15px;'>
-
-                <button type="buton" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success">Submit</button>
                 </div>
 
             </form>

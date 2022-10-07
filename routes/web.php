@@ -31,11 +31,13 @@ Route::get('/canceled/{id}',[AdminController::class,'canceled']);
 Route::get('/showDoctor', [AdminController::class,'showDoctor']);
 Route::get('/delete/{id}',[AdminController::class,'deleteDoctor']);
 Route::get('/update/{id}',[AdminController::class,'updateDoctor']);
-Route::get('/editDoctor/{$id}',[AdminController::class,'editDoctor']);
+Route::post('/editDoctor/{id}',[AdminController::class,'editDoctor']);
+Route::get('/emailView/{id}',[AdminController::class,'emailView']);
+Route::post('/sendEmail/{id}',[AdminController::class,'sendEmail']);
 
 
 
-Route::get('/home',[HomeController::class, 'redirect']);
+Route::get('/home',[HomeController::class, 'redirect'])->middleware('auth','verified');
 
 Route::middleware([
     'auth:sanctum',

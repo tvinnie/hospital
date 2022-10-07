@@ -23,6 +23,17 @@
 
        
         <div class="container" align="center"  style="padding-top:100px;">
+
+          @if(session()->has('message'))
+
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert"> x  </button>
+
+            {{session()->get('message')}}
+
+          </div>
+          @endif
+
   
               <form action="{{url('editDoctor',$data->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -51,7 +62,7 @@
   
                   <div style='padding:15px;'>
                   <label>Old Image</label>
-                  <img height="150px" width="150px" src="doctorimage/{{$data->image}}"/>
+                  <img height="150px" width="150px" name="file" src="doctorimage/{{$data->image}}"/>
                   </div>
 
                   <div style='padding:15px;'>
@@ -59,9 +70,9 @@
                     <input type="file" name="file" />
                     </div>
   
-                  <div style='padding:15px;'>
-                  <button type="buton" class="btn btn-success">Submit</button>
-                  </div>
+                    <div style='padding:15px;'>
+                      <button type="submit" class="btn btn-success">Update</button>
+                      </div>
   
               </form>
           </div>

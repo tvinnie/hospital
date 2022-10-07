@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Appointment;
 
+use Notification;
+use App\Notifications\SendEmailNotification;
+
 class AdminController extends Controller
 {
     public function addDoctor(){
@@ -17,7 +20,7 @@ class AdminController extends Controller
         $doctor = new doctor;
 
         $image = $request->file;
-        $imagename = time().'.'.$image->getClientoriginalExtension();
+        $imagename = time().'.'.$image->getClientOriginalExtension();
         $request->file->move('doctorimage', $imagename);
         $doctor->image=$imagename;
 
@@ -78,19 +81,51 @@ class AdminController extends Controller
         $data = doctor::find($id);
     
         return view('admin.update_doctor', compact('data'));
-     
-
     }
 
     public function editDoctor(Request $request, $id){
 
         $data = doctor::find($id);
 
-        $doctor->name = $request->name;
-        $doctor->phone = $request->phone;
-        $doctor->speciality = $request->speciality;
-        $doctor->room = $request->room;
-        
+        $data->name = $request->name;
+        $data->phone = $request->phone;
+        $data->speciality = $request->speciality;
+        $data->room = $request->room;
 
+        $image = $request->file;
+        if($image){
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $request->file->move('doctorimage', $imagename);
+            $data->image=$imagename;    
+        }
+        
+        $data->save();
+        return redirect()->back()->with('message','Doctors Data Updated Successfully!');
+
+    }
+
+    public function emailView($id){
+
+        $data = appointment::find($id);
+        return view('admin.email_view', compact('data'));
+    }
+
+    public function sendEmail(Request $request, $id){
+        
+        $data = appointment::find($id);
+
+        $details=[
+            'greeting' => $request->greeting,
+            'body' => $request->body,
+            'actiontext' => $request->actiontext,
+            'actionurl' => $request->actionurl,
+            'endpart' => $request->endpart
+
+        ];
+
+        Notification::send($data, new SendEmailNotification($details));
+
+        return redirect()->back()->with('message','Email Notification sent Successfully!');
+        
     }
 }
