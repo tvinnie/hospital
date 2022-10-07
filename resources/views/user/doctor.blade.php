@@ -10,7 +10,7 @@
         <div class="item">
           <div class="card-doctor">
             <div class="header">
-              <img height="600px" src="doctorimage/{{$doctors->image}}" alt="">
+              <img style="height: 600px !important" src="doctorimage/{{$doctors->image}}" alt="">
               <div class="meta">
                 <a href="#"><span class="mai-call"></span></a>
                 <a href="#"><span class="mai-logo-whatsapp"></span></a>

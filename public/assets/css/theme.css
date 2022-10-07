@@ -39,6 +39,12 @@ a:hover {
 }
 
 
+/* self additional css */
+.page-section .container h1{
+  font-size: 2.5em !important;
+}
+
+
 .text-xs {
   font-size: 12px !important;
 }
@@ -1269,6 +1275,8 @@ a.text-dark:hover, a.text-dark:focus {
   border-radius: 4px;
   box-shadow: 0 2px 6px rgba(154, 159, 151, 0.2);
 }
+
+
 
 .card-service p {
   margin-top: 10px;

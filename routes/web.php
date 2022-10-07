@@ -20,11 +20,13 @@ use App\Http\Controllers\AdminController;
 // });
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/add_doctor_view', [AdminController::class, 'addDoctor']);
-Route::post('/upload_doctor',[AdminController::class,'uploadDoctorData']);
 Route::post('/appointment',[HomeController::class,'appointment']);
 Route::get('/myappointment',[HomeController::class,'myappointment']);
 Route::get('/cancel_appointment/{id}',[HomeController::class,'cancel_appointment']);
+Route::get('/home',[HomeController::class, 'redirect'])->middleware('auth','verified');
+
+Route::get('/add_doctor_view', [AdminController::class, 'addDoctor']);
+Route::post('/upload_doctor',[AdminController::class,'uploadDoctorData']);
 Route::get('/show_appointment',[AdminController::class,'show_appointment']);
 Route::get('/approved/{id}',[AdminController::class,'approved_appointment']);
 Route::get('/canceled/{id}',[AdminController::class,'canceled']);
@@ -37,7 +39,7 @@ Route::post('/sendEmail/{id}',[AdminController::class,'sendEmail']);
 
 
 
-Route::get('/home',[HomeController::class, 'redirect'])->middleware('auth','verified');
+
 
 Route::middleware([
     'auth:sanctum',

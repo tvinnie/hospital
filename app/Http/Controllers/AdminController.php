@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Doctor;
 use App\Models\Appointment;
 
@@ -12,7 +13,17 @@ use App\Notifications\SendEmailNotification;
 class AdminController extends Controller
 {
     public function addDoctor(){
-        return view('admin.add_Doctor');
+        if(Auth::id()) {
+            if(Auth::user()->usertype==1){
+                return view('admin.add_Doctor');
+            } else {
+
+                return redirect()->back();
+            }
+        }else{
+            return redirect('/');
+        }
+        
     }
 
     public function uploadDoctorData(Request $request){
@@ -37,10 +48,17 @@ class AdminController extends Controller
     }
 
     public function show_appointment(){
-        
-        $data = appointment::all();
 
-        return view('admin.showappointment', compact('data'));
+        if(Auth::id()) {
+            if(Auth::user()->usertype==1){
+                $data = appointment::all();
+                return view('admin.showappointment', compact('data'));
+            } else{
+                return redirect()->back();
+            }
+        } else {
+            return redirect('/');
+        }
     }
 
     public function approved_appointment($id){
@@ -64,8 +82,18 @@ class AdminController extends Controller
 
     public function showDoctor(){
 
-        $data = doctor::all();
-        return view('admin.showDoctor', compact('data'));
+        if(Auth::id()){
+            if(Auth::user()->usertype==1){
+                $data = doctor::all();
+                return view('admin.showDoctor', compact('data'));
+            }else{
+                return redirect()->back();
+            }
+        }else{
+            return redirect('/');
+        }
+
+        
     }
 
     public function deleteDoctor($id){
